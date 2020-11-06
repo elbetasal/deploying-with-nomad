@@ -31,7 +31,7 @@ function lookup_path_in_instance_dynamic_data {
 
 readonly EC2_INSTANCE_METADATA_URL="http://169.254.169.254/latest/meta-data"
 readonly EC2_INSTANCE_DYNAMIC_DATA_URL="http://169.254.169.254/latest/dynamic"
-readonly NOMAD_VERSION="0.12.0"
+readonly NOMAD_VERSION="0.12.7"
 readonly CONSUL_VERSION="1.8.0"
 
 sudo yum update -y

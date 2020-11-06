@@ -79,3 +79,6 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,terraform
 
+
+# Ignore Gradle build output directory
+build

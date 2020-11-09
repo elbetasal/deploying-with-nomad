@@ -22,6 +22,9 @@ dependencies {
 jib {
     from {
         image ="openjdk:alpine"
-
+    }
+    to {
+        image = "pleymo/${project.name}"
+        tags = setOf("latest", "${project.version}")
     }
 }

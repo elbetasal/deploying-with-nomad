@@ -29,6 +29,6 @@ class HealthController {
 class RestController {
 
     @GetMapping
-    fun hello() = "Hello"
+    fun hello() = "Hello3"
 
 }

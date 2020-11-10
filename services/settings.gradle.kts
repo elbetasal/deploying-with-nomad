@@ -1,1 +1,1 @@
-include("movies-catalog")
+include("movies-catalog", "ratings-catalog")

@@ -1,17 +1,18 @@
-job "movie-catalog" {
+job "ratings-catalog" {
   datacenters = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
   type = "service"
 
   update {
+    max_parallel = 1
     min_healthy_time = "10s"
     healthy_deadline = "3m"
     progress_deadline = "10m"
     auto_revert = false
-    canary = 2
+    canary = 0
   }
   group "api" {
-    count = 4
+    count = 2
 
     restart {
       attempts = 2
@@ -27,8 +28,9 @@ job "movie-catalog" {
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/movies-catalog:4.0"
+        image = "pleymo/ratings-catalog:1.0"
         ports = ["http"]
+        network_mode = "host"
       }
 
       resources {
@@ -38,8 +40,8 @@ job "movie-catalog" {
     }
 
     service {
-      name = "movies-catalog"
-      tags = ["urlprefix-/movies strip=/movies", "us-east-1"]
+      name = "ratings-catalog"
+      tags = ["urlprefix-/ratings strip=/ratings", "us-east-1"]
       port     = "http"
 
       check {

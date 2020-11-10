@@ -33,25 +33,19 @@ resource "aws_security_group" "server_lb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   ingress {
     from_port   = 9998
     to_port     = 9998
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+  ingress {
+    from_port = 80
+    protocol = "tcp"
+    to_port = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 }
 
 resource "aws_elb" "server_lb" {

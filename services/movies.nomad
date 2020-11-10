@@ -9,7 +9,7 @@ job "movie-catalog" {
     healthy_deadline = "3m"
     progress_deadline = "10m"
     auto_revert = false
-    canary = 1
+    canary = 2
   }
   group "api" {
     count = 2
@@ -40,7 +40,7 @@ job "movie-catalog" {
 
     service {
       name = "movies-catalog"
-      tags = ["urlprefix-/movies strip=/movies", "us-east-1"]
+      tags = ["urlprefix-development.movies.beta.com/", "us-east-1"]
       port     = "http"
 
       check {

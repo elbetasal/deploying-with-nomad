@@ -65,8 +65,7 @@ resource "aws_security_group_rule" "allow_http_inbound" {
   from_port   = var.http_port
   to_port     = var.http_port
   protocol    = "tcp"
-  cidr_blocks = [var.cidr_block]//Find out if we can restrict this to only the LB
-//  cidr_blocks = [var.cidr_block]//Find out if we can restrict this to only the LB
+  cidr_blocks = [var.cidr_block]
 
   security_group_id = aws_security_group.nomad_rules.id
 }
@@ -75,7 +74,6 @@ module "security_group_rules" {
   source = "git::git@github.com:hashicorp/terraform-aws-consul.git//modules/consul-security-group-rules"
 
   security_group_id = aws_security_group.nomad_rules.id
-//  allowed_inbound_cidr_blocks = [var.cidr_block]
   allowed_inbound_cidr_blocks = [var.cidr_block]
 
 }

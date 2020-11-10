@@ -9,7 +9,7 @@ job "movie-catalog" {
     healthy_deadline = "3m"
     progress_deadline = "10m"
     auto_revert = false
-    canary = 1
+    canary = 0
   }
   group "api" {
     count = 2
@@ -28,7 +28,7 @@ job "movie-catalog" {
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/movies-catalog:3.0"
+        image = "pleymo/movies-catalog:prefix"
         ports = ["http"]
       }
 
@@ -40,7 +40,7 @@ job "movie-catalog" {
 
     service {
       name = "movies-catalog"
-      tags = ["urlprefix-/movies strip=/movies", "us-east-1"]
+      tags = ["urlprefix-/movies", "us-east-1"]
       port     = "http"
 
       check {

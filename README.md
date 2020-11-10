@@ -6,6 +6,7 @@ This is a project to blable and talk about what's being connected
 
 - Terraform
 - Nomad cli
+- httpie
 - An AWS account 
 
 ### Steps to create the cluster in AWS
@@ -25,12 +26,10 @@ This is a project to blable and talk about what's being connected
 1. Run `nomad plan load_balancer.nomad`.
 1. Run `nomad run load_balancer.nomad`.
 1. Last line's output should look like this `==> Evaluation "b450ced8" finished with status "complete"`
-1. Run `nomad run load_balancer.nomad`
-1. Run `dig +noall +short nomad-server-lb-773388063.us-east-1.elb.amazonaws.com A | awk '{print $1 " development.elbeta.com"}' | sudo tee -a /etc/hosts`
-1. Run `nomad plan movies.nomad`
+1. Run `./gradlew jib -Pversion=1.0`
 1. Run `nomad run movies.nomad`
-1. Run `nomad status movie-catalog`
-1. Run `dig +noall +short nomad-server-lb-773388063.us-east-1.elb.amazonaws.com A | awk '{print $1 " development.movies.elbeta.com"}' | sudo tee -a /etc/hosts`
+1. Run `http http://nomad-server-lb-773388063.us-east-1.elb.amazonaws.com/movies/`
 1. Open your browser 
 
+1. Run `cd ../../cluster-generation/development`
 1. `terraform destroy`

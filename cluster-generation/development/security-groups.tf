@@ -65,6 +65,37 @@ resource "aws_security_group_rule" "allow_http_inbound" {
   from_port   = var.http_port
   to_port     = var.http_port
   protocol    = "tcp"
+  cidr_blocks = [var.cidr_block]//Find out if we can restrict this to only the LB
+//  cidr_blocks = [var.cidr_block]//Find out if we can restrict this to only the LB
+
+  security_group_id = aws_security_group.nomad_rules.id
+}
+
+module "security_group_rules" {
+  source = "git::git@github.com:hashicorp/terraform-aws-consul.git//modules/consul-security-group-rules"
+
+  security_group_id = aws_security_group.nomad_rules.id
+//  allowed_inbound_cidr_blocks = [var.cidr_block]
+  allowed_inbound_cidr_blocks = [var.cidr_block]
+
+}
+
+
+resource "aws_security_group_rule" "allow_fabio_lb" {
+  type        = "ingress"
+  from_port   = 9999
+  to_port     = 9999
+  protocol    = "tcp"
+  cidr_blocks = [var.cidr_block]
+
+  security_group_id = aws_security_group.nomad_rules.id
+}
+
+resource "aws_security_group_rule" "allow_fabio_ui" {
+  type        = "ingress"
+  from_port   = 9998
+  to_port     = 9998
+  protocol    = "tcp"
   cidr_blocks = [var.cidr_block]
 
   security_group_id = aws_security_group.nomad_rules.id
@@ -100,10 +131,12 @@ resource "aws_security_group_rule" "allow_serf_udp_inbound" {
   security_group_id = aws_security_group.nomad_rules.id
 }
 
-module "security_group_rules" {
-  source = "git::git@github.com:hashicorp/terraform-aws-consul.git//modules/consul-security-group-rules"
+resource "aws_security_group_rule" "allow_port_connectivity" {
+  type        = "ingress"
+  from_port   = 0
+  to_port     = 65535
+  protocol    = "tcp"
+  cidr_blocks = [var.cidr_block]
 
   security_group_id = aws_security_group.nomad_rules.id
-  allowed_inbound_cidr_blocks = [var.cidr_block]
-
 }

@@ -1,5 +1,6 @@
 package org.developer.elbetasal.movies
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,7 +25,7 @@ class HealthController {
 }
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/movies")
 class RestController {
 
     @GetMapping

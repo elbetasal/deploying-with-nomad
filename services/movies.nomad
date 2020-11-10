@@ -28,7 +28,7 @@ job "movie-catalog" {
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/movies-catalog:prefix"
+        image = "pleymo/movies-catalog:without"
         ports = ["http"]
       }
 
@@ -40,7 +40,7 @@ job "movie-catalog" {
 
     service {
       name = "movies-catalog"
-      tags = ["urlprefix-/movies", "us-east-1"]
+      tags = ["urlprefix-/movies strip=/movies", "us-east-1"]
       port     = "http"
 
       check {

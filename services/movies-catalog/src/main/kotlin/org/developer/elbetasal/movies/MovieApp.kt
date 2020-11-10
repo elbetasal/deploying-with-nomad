@@ -25,7 +25,7 @@ class HealthController {
 }
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/")
 class RestController {
 
     @GetMapping

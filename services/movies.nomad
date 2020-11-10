@@ -40,7 +40,7 @@ job "movie-catalog" {
 
     service {
       name = "movies-catalog"
-      tags = ["urlprefix-/movies strip=/movies", "us-east-1"]
+      tags = ["urlprefix-development.movies.beta.com/", "us-east-1"]
       port     = "http"
 
       check {

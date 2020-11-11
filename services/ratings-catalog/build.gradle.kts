@@ -19,9 +19,10 @@ extra["springCloudVersion"] = "Hoxton.SR9"
 dependencies {
 	implementation(kotlin("stdlib"))
 
-//	implementation("org.springframework.cloud:spring-cloud-starter-consul-config")
 	implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1")
 }
 
 dependencyManagement {

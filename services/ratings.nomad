@@ -4,12 +4,10 @@ job "ratings-catalog" {
   type = "service"
 
   update {
-    max_parallel = 1
     min_healthy_time = "10s"
     healthy_deadline = "3m"
     progress_deadline = "10m"
     auto_revert = false
-    canary = 0
   }
   group "api" {
     count = 2
@@ -28,7 +26,7 @@ job "ratings-catalog" {
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/ratings-catalog:1.0"
+        image = "pleymo/ratings-catalog:2.0"
         ports = ["http"]
         network_mode = "host"
       }

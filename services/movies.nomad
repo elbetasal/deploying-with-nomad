@@ -27,7 +27,7 @@ job "movie-catalog" {
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/movies-catalog:4.0"
+        image = "pleymo/movies-catalog:1.0"
         ports = ["http"]
       }
 

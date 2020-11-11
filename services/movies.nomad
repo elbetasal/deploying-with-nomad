@@ -1,5 +1,5 @@
 job "movie-catalog" {
-  datacenters = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  datacenters = ["us-east-1a","us-east-1b","us-east-1c"]
 
   type = "service"
 
@@ -8,7 +8,6 @@ job "movie-catalog" {
     healthy_deadline = "3m"
     progress_deadline = "10m"
     auto_revert = false
-    canary = 2
   }
   group "api" {
     count = 4
@@ -23,12 +22,12 @@ job "movie-catalog" {
     network {
       port "http" {}
     }
-
     task "service" {
       driver = "docker"
       config {
-        image = "pleymo/movies-catalog:1.0"
+        image = "pleymo/movies-catalog:5.0"
         ports = ["http"]
+        network_mode = "host"
       }
 
       resources {

@@ -38,7 +38,7 @@ sudo yum update -y
 sudo amazon-linux-extras install docker
 sudo usermod -aG docker ec2-user
 
-sudo yum -y install jq docker
+sudo yum -y install jq docker bind bind-utils
 
 echo "Downloading consul ${CONSUL_VERSION}"
 curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
@@ -161,6 +161,37 @@ sudo cat > /etc/nomad.d/client.hcl << EOF
 client {
   enabled = true
 }
+EOF
+
+sudo cat > /etc/named.conf << EOF
+options {
+  listen-on port 53 { 127.0.0.1; };
+  listen-on-v6 port 53 { ::1; };
+  directory       "/var/named";
+  dump-file       "/var/named/data/cache_dump.db";
+  statistics-file "/var/named/data/named_stats.txt";
+  memstatistics-file "/var/named/data/named_mem_stats.txt";
+  allow-query     { localhost; };
+  recursion yes;
+
+  dnssec-enable no;
+  dnssec-validation no;
+
+  /* Path to ISC DLV key */
+  bindkeys-file "/etc/named.iscdlv.key";
+
+  managed-keys-directory "/var/named/dynamic";
+};
+
+include "/etc/named/consul.conf";
+EOF
+
+sudo cat > /etc/named/consul << EOF
+zone "consul" IN {
+  type forward;
+  forward only;
+  forwarders { 127.0.0.1 port 8600; };
+};
 EOF
 
 sudo systemctl enable nomad

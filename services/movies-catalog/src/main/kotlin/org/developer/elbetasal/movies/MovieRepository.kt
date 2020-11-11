@@ -1,16 +1,17 @@
 package org.developer.elbetasal.movies
 
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class MovieRepository {
+class MovieRepository(private val redisTemplate: RedisTemplate<String, Movie>) {
 
-    private val movies = mutableSetOf<Movie>()
+    fun findAll() = redisTemplate.keys("*").map {
+        println(it)
+        redisTemplate.opsForValue().get(it)
+    }
 
-    fun findAll() = movies
+    fun findById(id: String): Movie? = redisTemplate.opsForValue().get(id)
 
-    fun findById(id: String): Movie? = movies.find { it.productId == id }
-
-    fun createMovie(movie: Movie) = movies.add(movie)
-
+    fun createMovie(movie: Movie) = redisTemplate.opsForValue().set(movie.productId, movie)
 }
